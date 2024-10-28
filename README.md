@@ -9,6 +9,7 @@ This repository contains the official implementation of the paper ["HumanRef: Si
 ```sh
 conda env create -f environment.yml
 conda activate humanref
+
 pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 pip install git+https://github.com/openai/CLIP.git
 pip install git+https://github.com/huggingface/diffusers.git@ce5504934ac484fca39a1a5434ecfae09eabdf41
