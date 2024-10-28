@@ -377,7 +377,7 @@ class HumanRef(BaseLift3DSystem):
             # self.log("train/loss_3Dnormal", loss_smooth_3d)
             loss += loss_smooth_3d * self.cfg.loss.lambda_3d_normal_smooth
         
-        ## SDS-reference-only loss
+        ## Ref-SDS loss
         if not is_front_view and use_diffusion_prior:
             if (self.cfg.attention_strategy == 0 or self.cfg.attention_strategy == 1) and not run_local_rendering:
                 mask_image_ref = mask_parts_ref

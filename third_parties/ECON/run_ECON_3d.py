@@ -15,7 +15,8 @@
 # Contact: ps-license@tuebingen.mpg.de
 
 import os, sys, imageio
-os.environ['WEIGHT_PATH'] = '/apdcephfs_cq10/share_1290939/vg_share/eckertzhang/Weights'
+os.environ['TORCH_HOME'] = './Weights/TorchHub'
+os.environ['WEIGHT_PATH'] = './Weights'
 import logging
 import warnings
 
@@ -58,14 +59,12 @@ if __name__ == "__main__":
     parser.add_argument("-loop_smpl", "--loop_smpl", type=int, default=50)  # default=50
     parser.add_argument("-patience", "--patience", type=int, default=5)
 
-    parser.add_argument("-in_dir", "--in_dir", type=str, default="/apdcephfs/share_1330077/eckertzhang/Dataset/cape_test_data/cape_3views")
-    # /apdcephfs/share_1330077/eckertzhang/Dataset/cape_test_data/cape_3views  /apdcephfs/share_1330077/eckertzhang/Dataset/thuman2_icon/thuman2_36views0
-    parser.add_argument("-out_dir", "--out_dir", type=str, default="/apdcephfs/share_1330077/eckertzhang/Dataset/cape_test_data/results_econ")
-    # /apdcephfs/share_1330077/eckertzhang/Dataset/cape_test_data/results_econ  /apdcephfs/share_1330077/eckertzhang/Dataset/thuman2_icon/results_econ
+    parser.add_argument("-in_dir", "--in_dir", type=str, default="./Dataset/cape_test_data/cape_3views")
+    parser.add_argument("-out_dir", "--out_dir", type=str, default="./Dataset/cape_test_data/results_econ")
     parser.add_argument("-dataset_type", "--dataset_type", type=str, default='cape')  # cape thuman2
 
     parser.add_argument("-seg_dir", "--seg_dir", type=str, default=None)
-    parser.add_argument("-cfg", "--config", type=str, default="/apdcephfs/private_eckertzhang/Codes/NeRFs/humandf_three/third_parties/ECON/configs/econ.yaml")
+    parser.add_argument("-cfg", "--config", type=str, default="./third_parties/ECON/configs/econ.yaml")
     parser.add_argument("-multi", action="store_false")  # default True
     parser.add_argument("-withmask", "--withmask", action="store_true")  # default False
     parser.add_argument("-novis", action="store_true")  # default False
@@ -77,7 +76,7 @@ if __name__ == "__main__":
 
     # cfg read and merge
     cfg.merge_from_file(args.config)
-    cfg.merge_from_file("/apdcephfs/private_eckertzhang/Codes/NeRFs/humandf_three/third_parties/ECON/lib/pymafx/configs/pymafx_config.yaml")
+    cfg.merge_from_file("./third_parties/ECON/lib/pymafx/configs/pymafx_config.yaml")
     device = torch.device(f"cuda:{args.gpu_device}")
 
     # setting for testing on in-the-wild images
@@ -87,6 +86,8 @@ if __name__ == "__main__":
     ]
 
     cfg.merge_from_list(cfg_show_list)
+    if os.getenv('WEIGHT_PATH') is not None:
+        cfg.normal_path = os.path.join(os.getenv('WEIGHT_PATH'), cfg.normal_path)
     cfg.freeze()
 
     # load normal model

@@ -8,7 +8,47 @@ This repository contains the official implementation of the paper ["HumanRef: Si
 ## Installation
 ```sh
 conda env create -f environment.yml
+conda activate humanref
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+pip install git+https://github.com/openai/CLIP.git
+pip install git+https://github.com/huggingface/diffusers.git@ce5504934ac484fca39a1a5434ecfae09eabdf41
+
+git clone https://github.com/NVlabs/nvdiffrast
+cd nvdiffrast && pip install .
+cd .. && rm -rf nvdiffrast
 ```
+
+## Download pre-trained models
+
+### 1. download econ_weights
+```sh
+mkdir -p Weights/econ_weights && cd Weights
+sh ./third_parties/ECON/fetch_data.sh
+mv data/* econ_weights/
+cd ..
+```
+
+### 2. download 'blip2-opt-2.7b' & 'stable-diffusion-v1-5'
+```sh
+cd Weights
+git lfs install
+git clone https://huggingface.co/Salesforce/blip2-opt-2.7b
+git clone https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5
+cd ..
+```
+
+### 3. download weights of LPIPS
+```sh
+mkdir -p Weights/LPIPS && cd Weights/LPIPS
+wget https://download.pytorch.org/models/vgg16-397923af.pth
+cd ../..
+```
+
+### 4. download weights of SCHP
+```sh
+mkdir -p Weights/SCHP
+```
+download [exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1k4dllHpu0bdx38J7H28rVVLpU-kOHmnH/view?usp=sharing) and put it in 'Weights/SCHP'
 
 
 ## Quickstart

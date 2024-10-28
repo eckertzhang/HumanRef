@@ -1,8 +1,8 @@
 import argparse
 import logging
 import os, sys
-os.environ['TORCH_HOME'] = '/apdcephfs_cq10/share_1290939/vg_share/eckertzhang/Weights/TorchHub'
-os.environ['WEIGHT_PATH'] = '/apdcephfs_cq10/share_1290939/vg_share/eckertzhang/Weights'
+os.environ['TORCH_HOME'] = './Weights/TorchHub'
+os.environ['WEIGHT_PATH'] = './Weights'
 os.environ['ECON_PATH'] = './data/Results_ECON'  # Path saving Results_ECON
 os.environ['Human3D_PATH'] = '/apdcephfs_cq10/share_1290939/eckertzhang'  # Path saving 3D human datasets: CAPE/Thuman2
 

@@ -359,13 +359,14 @@ class SingleImageIterableDataset(IterableDataset, Updateable):
             T.ToTensor(),
             T.Normalize(mean=[0.406, 0.456, 0.485], std=[0.225, 0.224, 0.229])
         ])
-        dataset = SimpleFolderDataset(root=path_croped_img, input_size=input_size, transform=transform)
+        dataset = SimpleFolderDataset(root=os.path.dirname(path_croped_img), input_size=input_size, transform=transform)
         dataloader = DataLoader(dataset)
         # label = [0'Background', 1'Hat', 2'Hair', 3'Glove', 4'Sunglasses', 5'Upper-clothes', 6'Dress', 7'Coat',
         #           8'Socks', 9'Pants', 10'Jumpsuits', 11'Scarf', 12'Skirt', 13'Face', 14'Left-arm', 15'Right-arm',
         #           16'Left-leg', 17'Right-leg', 18'Left-shoe', 19'Right-shoe']  # 5,6,7,9,10,12
         with torch.no_grad():
             for idx, batch in enumerate(dataloader):
+                if idx>0: break
                 image, meta = batch
                 img_name = meta['name'][0]
                 c = meta['center'].numpy()[0]

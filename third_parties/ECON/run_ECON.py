@@ -15,7 +15,8 @@
 # Contact: ps-license@tuebingen.mpg.de
 
 import os, sys, imageio
-os.environ['WEIGHT_PATH'] = '/apdcephfs_cq10/share_1290939/vg_share/eckertzhang/Weights'
+os.environ['TORCH_HOME'] = './Weights/TorchHub'
+os.environ['WEIGHT_PATH'] = './Weights'
 import logging
 import warnings
 
@@ -57,8 +58,8 @@ if __name__ == "__main__":
     parser.add_argument("-gpu", "--gpu_device", type=int, default=0)
     parser.add_argument("-loop_smpl", "--loop_smpl", type=int, default=50)
     parser.add_argument("-patience", "--patience", type=int, default=5)
-    parser.add_argument("-in_dir", "--in_dir", type=str, default="/apdcephfs/private_eckertzhang/Codes/Results/data_human_images/image_000050.png")
-    parser.add_argument("-out_dir", "--out_dir", type=str, default="/apdcephfs/private_eckertzhang/Codes/Results/Results_ECON_new")
+    parser.add_argument("-in_dir", "--in_dir", type=str, default="./Results/data_human_images/image_000050.png")
+    parser.add_argument("-out_dir", "--out_dir", type=str, default="./Results/Results_ECON_new")
     parser.add_argument("-seg_dir", "--seg_dir", type=str, default=None)
     parser.add_argument("-cfg", "--config", type=str, default="./third_parties/ECON/configs/econ.yaml")
     parser.add_argument("-multi", action="store_false")  # default True
@@ -80,6 +81,8 @@ if __name__ == "__main__":
     ]
 
     cfg.merge_from_list(cfg_show_list)
+    if os.getenv('WEIGHT_PATH') is not None:
+        cfg.normal_path = os.path.join(os.getenv('WEIGHT_PATH'), cfg.normal_path)
     cfg.freeze()
 
     # load normal model

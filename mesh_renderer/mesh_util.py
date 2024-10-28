@@ -42,7 +42,7 @@ class Format:
 
 class SMPLX:
     def __init__(self):
-        self.current_dir = osp.join('/apdcephfs_cq10/share_1290939/vg_share/eckertzhang/Weights/econ_weights', "smpl_related")
+        self.current_dir = osp.join(os.getenv('WEIGHT_PATH'), 'econ_weights', "smpl_related")
 
         self.smpl_verts_path = osp.join(self.current_dir, "smpl_data/smpl_verts.npy")
         self.smpl_faces_path = osp.join(self.current_dir, "smpl_data/smpl_faces.npy")
